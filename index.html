@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+
+    <script src="cordova.js"></script>
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.mobile.min.js"></script>
+    
+</head>
+<body>
+    <div id="result">Result</div>
+	<script type="text/javascript">
+			$(function ()
+			{
+				document.addEventListener("deviceready", onDeviceReady, false);
+			})();
+
+		function onDeviceReady() {
+			
+			// specify contact search criteria
+			var options = new ContactFindOptions();
+			options.filter = "";      // empty search string returns all contacts
+			options.multiple = true;  // return multiple results
+			filter = ["*"]; // return contact.displayName field
+			//filter = ["name", "phoneNumbers"];
+			// find contacts
+			navigator.contacts.find(filter,onSuccess,onError,options);
+		} 
+
+
+		function onSuccess(contacts) {
+			alert("win");
+			document.getElementById("result").innerHTML = "";
+			for (var i = 0; i < contacts.length; i++) {
+				// display phone numbers
+				document.getElementById("result").innerHTML += "<br/>" + contacts[i].id + "<br/><br/>";
+			}
+		}
+
+
+		function onError(contactError) {
+			alert('Failed to get the contacts');
+		}
+	</script>
+</body>
+</html>
